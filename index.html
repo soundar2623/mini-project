@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f2f2f2;
             margin: 0;
             padding: 0;
             display: flex;
@@ -15,68 +15,90 @@
             align-items: center;
             height: 100vh;
         }
-        
-        .container {
+
+        #loginFormContainer {
             background-color: #fff;
-            border-radius: 8px;
             padding: 20px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            max-width: 400px;
+            width: 100%;
             text-align: center;
         }
-        
-        input[type="text"],
-        input[type="password"] {
+
+        #loginFormContainer h2 {
+            margin-bottom: 20px;
+        }
+
+        #loginForm label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        #loginForm input {
             width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 0;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-sizing: border-box;
         }
-        
-        input[type="submit"] {
-            width: 100%;
+
+        #loginForm button {
+            width: calc(100% - 20px);
             padding: 10px;
-            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
             border: none;
             border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
             cursor: pointer;
+            box-sizing: border-box;
         }
-        
-        input[type="submit"]:hover {
-            background-color: #0056b3;
+
+        #loginForm button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div id="loginFormContainer">
         <h2>Login</h2>
         <form id="loginForm">
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <input type="submit" value="Login">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit">Login</button>
         </form>
     </div>
 
     <script>
+        // Function to handle form submission
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent default form submission
 
-            // Retrieve username and password values
+            // Simulated login validation (Replace with your actual login logic)
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
-
-            // Dummy authentication - Replace this with your actual authentication logic
-            if (username === "admin" && password === "password") {
-                alert("Login successful!");
-                // Redirect to QR page with username as query parameter
-                window.location.href = "/qrPage?username=" + encodeURIComponent(username);
+            if (username === "demo" && password === "demo123") {
+                // Successful login
+                var qrData = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent("https://example.com/user=" + username);
+                openQRCodePage(qrData); // Open QR code page with user-specific URL
             } else {
-                alert("Invalid username or password!");
+                alert("Invalid username or password. Please try again."); // Show error message
             }
         });
+
+        // Function to open QR code page in a new window
+        function openQRCodePage(qrData) {
+            var newWindow = window.open("qrcode.html?qrdata=" + qrData, "_blank", "width=400,height=400");
+            if (newWindow) {
+                newWindow.focus();
+            } else {
+                alert("Popup window blocked. Please allow popups for this site.");
+            }
+        }
     </script>
 </body>
 </html>
