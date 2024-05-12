@@ -74,7 +74,6 @@
     </div>
 
     <script>
-        // Function to handle form submission
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent default form submission
 
@@ -82,9 +81,13 @@
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
             if (username === "demo" && password === "demo123") {
-                // Successful login
-                var qrData = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent("https://example.com/user=" + username);
-                openQRCodePage(qrData); // Open QR code page with user-specific URL
+                // Simulated API call
+                setTimeout(function() {
+                    // Upon successful API response, redirect to welcome.html
+                    var ipAddress = window.location.hostname + ":" + window.location.port;
+                    var qrData = "https://api.qrserver.com/v1/create-qr-code/?data=" + encodeURIComponent("http://" + ipAddress + "/user=" + username);
+                    openQRCodePage(qrData);
+                }, 1000); // Simulating delay for API response
             } else {
                 alert("Invalid username or password. Please try again."); // Show error message
             }
